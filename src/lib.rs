@@ -2,6 +2,7 @@ use std::process::Command;
 use anyhow::{Result, anyhow};
 use binaryfile::BinaryReader;
 use regex::Regex;
+use std::env;
 
 const DEFAULT_TEPRA_PATH:&str = r#"c:\Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe"#;
 
@@ -26,7 +27,9 @@ impl TEPRA {
 
     pub fn new(tepra_path: Option<&str>) -> Self {
         let tepra_path = tepra_path.unwrap_or(DEFAULT_TEPRA_PATH);
-        let tmp = format!("{}\\tapesize.txt", cwd!());
+
+        let tmp = format!("{}\\tepesize.txt", std::env::var("TEMP").unwrap_or_else(|_| "c:\\".to_string()));
+        print!("{}", tmp);
         Self {
             tepra_path : tepra_path.to_string(),
             tpe_path : "".to_string(),
@@ -106,8 +109,6 @@ impl TEPRA {
         let _ret = Command::new(&self.tepra_path)
             .args(&["/p", &param])
             .output()?;
-
-        //println!("{:?}", _ret);
 
         Ok(())
     }
