@@ -29,7 +29,6 @@ impl TEPRA {
         let tepra_path = tepra_path.unwrap_or(DEFAULT_TEPRA_PATH);
 
         let tmp = format!("{}\\tepesize.txt", std::env::var("TEMP").unwrap_or_else(|_| "c:\\".to_string()));
-        print!("{}", tmp);
         Self {
             tepra_path : tepra_path.to_string(),
             tpe_path : "".to_string(),
