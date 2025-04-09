@@ -103,7 +103,7 @@ impl TEPRA {
         }
 
 
-        println!("{} /p {}", &self.tepra_path, &param);
+        
 
 
         let param = format!("{},{},{}",
@@ -111,6 +111,8 @@ impl TEPRA {
             self.csv_path,
             self.print_count
             );
+
+        println!("{} /p {}", &self.tepra_path, &param);
 
         let _ret = Command::new(&self.tepra_path)
             .args(&["/p", &param])
