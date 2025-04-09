@@ -76,6 +76,9 @@ impl TEPRA {
                 self.tmp_path
                 );
 
+
+            println!("{:?}", param);
+
             _ = Command::new(&self.tepra_path)
                 .args(&["/p", &param])
                 .output()?;
