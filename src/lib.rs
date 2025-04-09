@@ -103,7 +103,7 @@ impl TEPRA {
         }
 
 
-        println!("{} /p {}", &self.tepra_path, &param)
+        println!("{} /p {}", &self.tepra_path, &param);
 
 
         let param = format!("{},{},{}",
