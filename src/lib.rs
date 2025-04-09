@@ -103,6 +103,9 @@ impl TEPRA {
         }
 
 
+        println!("{} /p {}", &self.tepra_path, &param)
+
+
         let param = format!("{},{},{}",
             self.tpe_path,
             self.csv_path,
