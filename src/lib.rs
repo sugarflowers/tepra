@@ -4,7 +4,7 @@ use binaryfile::BinaryReader;
 use regex::Regex;
 use std::env;
 
-const DEFAULT_TEPRA_PATH:&str = r#"c:\"Program Files (x86)\KING JIM\TEPRA SPC10"\SPC10.exe"#;
+const DEFAULT_TEPRA_PATH:&str = r#"c:\Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe"#;
 
 macro_rules! cwd {
     () => {
@@ -69,7 +69,7 @@ impl TEPRA {
 
         if self.required_tape_size != 0 {
 
-            let param = format!("\"{},{},{},/GT {}\"",
+            let param = format!("{},{},{},/GT {}",
                 self.tpe_path,
                 self.csv_path,
                 self.print_count,
@@ -103,7 +103,6 @@ impl TEPRA {
         }
 
 
-        
 
 
         let param = format!("{},{},{}",
