@@ -103,7 +103,7 @@ impl TEPRA {
         }
 
 
-        let param = format!("{},{},{}",
+        let param = format!("\"{},{},{}\"",
             self.tpe_path,
             self.csv_path,
             self.print_count
