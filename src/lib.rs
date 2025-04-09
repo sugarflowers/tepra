@@ -77,8 +77,8 @@ impl TEPRA {
                 );
 
 
-            println!(&self.tepra_path);
-            println!("{", param);
+            println!("{}", &self.tepra_path);
+            println!("{}", param);
 
             _ = Command::new(&self.tepra_path)
                 .args(&["/p", &param])
