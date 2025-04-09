@@ -82,7 +82,8 @@ impl TEPRA {
 
             _ = Command::new(&self.tepra_path)
                 .args(&["/p", &param])
-                .output()?;
+                .spawn()?;
+                //.output()?;
 
 
             // size.txt utf16 -> utf8
@@ -115,7 +116,8 @@ impl TEPRA {
 
         let _ret = Command::new(&self.tepra_path)
             .args(&["/p", &param])
-            .output()?;
+            .spawn()?;
+            //.output()?;
 
         Ok(())
     }
