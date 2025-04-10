@@ -79,7 +79,7 @@ impl TEPRA {
 
 
             println!("{}", &self.tepra_path);
-            println!("{}", param);
+            println!("{:?}", param);
 
             let mut ret = Command::new("cmd")
                 .arg("/C")
