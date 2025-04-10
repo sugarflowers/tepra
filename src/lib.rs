@@ -1,152 +1,131 @@
+use std::ffi::OsString;
 use std::process::Command;
-use anyhow::{Result, anyhow};
+use anyhow::{anyhow, Result};
 use binaryfile::BinaryReader;
 use regex::Regex;
-use std::env;
-use std::ffi::OsString;
-
-//const DEFAULT_TEPRA_PATH:OsString = OsString::from(r#"c:\Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe"#);
-
-macro_rules! cwd {
-    () => {
-        std::env::current_dir().unwrap().to_string_lossy().to_string()
-    };
-}
 
 
+
+#[derive(Default, Debug)]
 pub struct TEPRA {
-    //pub tepra_path: String,
     pub tepra_path: OsString,
-    pub tpe_path: String,
-    pub csv_path: String,
-    pub tmp_path: String,
-    pub print_count: u32,
-    pub required_tape_size: u32,
+    pub tpe_path: OsString,
+    pub csv_path: OsString,
+    pub size_path: OsString,
+    pub num_print: u32,
 }
+
 
 
 impl TEPRA {
-
-    pub fn new(tepra_path: Option<&OsString>) -> Self {
-        let default_tepra_path:OsString = OsString::from(r#"c:\Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe"#);
-        let tepra_path:OsString = tepra_path.unwrap_or(&default_tepra_path).clone();
-
-        let tmp = format!("{}\\tepesize.txt", std::env::var("TEMP").unwrap_or_else(|_| "c:\\".to_string()));
-        Self {
-            tepra_path : tepra_path,
-            tpe_path : "".to_string(),
-            csv_path: "".to_string(),
-            tmp_path: tmp,
-            print_count: 1,
-            required_tape_size: 0,
+    pub fn new() -> TEPRA {
+        TEPRA {
+            tepra_path: OsString::from(r#"c:\Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe"#),
+            num_print: 1,
+            ..Default::default()     
         }
     }
 
-    pub fn tpe(mut self, tpe_path: &str) -> Self {
-        self.tpe_path = tpe_path.to_string();
+    pub fn tepra(mut self, path:OsString) -> Self {
+        self.tepra_path = path;
         self
     }
 
-    pub fn csv(mut self, csv_path: &str) -> Self {
-        self.csv_path = csv_path.to_string();
+    pub fn tpe(mut self, path:OsString) -> Self {
+        self.tpe_path = path;
         self
     }
 
-    pub fn tmp(mut self, tmp_path: &str) -> Self {
-        self.tmp_path = tmp_path.to_string();
+    pub fn csv(mut self, path:OsString) -> Self {
+        self.csv_path = path;
         self
     }
 
-    pub fn print_count(mut self, print_count: u32) -> Self {
-        self.print_count = print_count;
+    pub fn size_file(mut self, path:OsString) -> Self {
+        self.size_path = path;
         self
     }
 
-    pub fn tape_size(mut self, tape_size: u32) -> Self {
-        self.required_tape_size = tape_size;
+    pub fn number_of(mut self, num_of_print:u32) -> Self {
+        self.num_print = num_of_print;
         self
     }
-
+    
 
     pub fn print(&self) -> Result<()> {
 
-        if self.required_tape_size != 0 {
+        let param = format!(r#"{},{},{}"#, 
+            self.tpe_path.to_string_lossy(),
+            self.csv_path.to_string_lossy(), 
+            self.num_print 
+        );
 
-            let param = OsString::from(format!(r#"{},{},{},/GT {}"#,
-                self.tpe_path,
-                self.csv_path,
-                self.print_count,
-                self.tmp_path
-                ));
-
-
-            println!("{:?}", &self.tepra_path);
-            println!("{:?}", param);
-
-            let mut ret = Command::new("cmd")
-                .arg("/C")
-                .arg(self.tepra_path.clone())
+        let mut child = Command::new(&self.tepra_path)
                 .arg("/p")
                 .arg(param)
-                //.spawn()?;
-                .output()?;
-            //let _ = ret.wait()?;
-            
+                .spawn()?;
 
-            // size.txt utf16 -> utf8
-            let bin = BinaryReader::open(&self.tmp_path)?.read();
-            let utf16data: Vec<u16> = bin.unwrap()
-                .chunks(2).map(|c| u16::from_le_bytes([c[0], c[1]])).collect();
+        let _ = child.wait()?;
 
-            let utf8data = String::from_utf16_lossy(&utf16data);
+        Ok(())
 
-            std::fs::remove_file(&self.tmp_path)?;
+    }
 
-            // check tape size
-            let pattern = format!(" {}mm", self.required_tape_size);
-            let re = Regex::new(&pattern).unwrap();
-            if re.is_match(&utf8data) == false {
-                return Err(anyhow!("not required tape size"));
-            }
+
+    pub fn check(&self, require_size: u32) -> Result<()> {
+        let param = format!(r#"{},{},{},/GT {}"#, 
+            self.tpe_path.to_string_lossy(),
+            self.csv_path.to_string_lossy(), 
+            self.num_print,
+            self.size_path.to_string_lossy()
+        );
+
+        let mut child = Command::new(&self.tepra_path)
+                .arg("/p")
+                .arg(param)
+                .spawn()?;
+
+        let _ = child.wait()?;
+
+        // decode
+        let size_path = &self.size_path.to_string_lossy();
+        let bin = BinaryReader::open(&size_path)?.read();
+        let utf16data: Vec<u16> = bin.unwrap()
+            .chunks(2).map(|c| u16::from_le_bytes([c[0], c[1]])).collect();
+        let utf8data = String::from_utf16_lossy(&utf16data);
+
+        // size check
+        let pattern = format!(" {}mm", require_size);
+        let re = Regex::new(&pattern).unwrap();
+        if re.is_match(&utf8data) == false {
+            return Err(anyhow!("not required tape size"));
         }
 
-
-
-
-        let param = format!("{},{},{}",
-            self.tpe_path,
-            self.csv_path,
-            self.print_count
-            );
-
-        println!("{:?}", &self.tepra_path);
-        println!("{:?}", param);
-
-        let mut ret = Command::new(&self.tepra_path)
-            .args(&["/p", &param])
-            //.spawn()?;
-            .output()?;
-        //let _ = ret.wait()?;
         Ok(())
     }
+
 }
 
 
 #[test]
 fn tepra_test() {
-    
-    let tpe_file = &format!(r#"{}\test.tpe"#, cwd!());
-    let csv_file = &format!(r#"{}\test.csv"#, cwd!());
 
-    let tepra = TEPRA::new(None)
-        .tpe(tpe_file)
-        .csv(csv_file)
-        .print_count(1)
-        .tape_size(6);
+    let tepra = TEPRA::new()
+        .tpe(OsString::from(r#"c:\work\tepra\label6mm.tpe"#))
+        .csv(OsString::from(r#"c:\work\tepra\dnum.csv"#))
+        .size_file(OsString::from(r#"c:\work\tepra\tapesize.txt"#))
+        .number_of(1);
 
-    match tepra.print() {
-        Ok(_) => println!("print ok"),
-        Err(e) => println!("*** {:?} ***", e.to_string())
-    }
+
+
+    let res = match tepra.check(6) {
+
+        Ok(_) => {
+            println!("ok!");
+            tepra.print().unwrap();
+        },
+
+        Err(e) => println!("err: {}", e)
+    };
+
 }
-
