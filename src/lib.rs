@@ -83,7 +83,7 @@ impl TEPRA {
             println!("{}", param);
 
             let mut ret = Command::new("cmd")
-                .args("/C")
+                .arg("/C")
                 .arg(&param)
                 .spawn()?;
                 //.output()?;
