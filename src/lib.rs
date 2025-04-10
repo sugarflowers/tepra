@@ -70,7 +70,8 @@ impl TEPRA {
 
         if self.required_tape_size != 0 {
 
-            let param = format!(r#""{},{},{},/GT" {}"#,
+            let param = format!("{} {},{},{},/GT {}",
+                self.tepra_path,
                 self.tpe_path,
                 self.csv_path,
                 self.print_count,
@@ -81,8 +82,9 @@ impl TEPRA {
             println!("{}", &self.tepra_path);
             println!("{}", param);
 
-            let mut ret = Command::new(&self.tepra_path)
-                .args(&["/p", &param])
+            let mut ret = Command::new("cmd")
+                .args("/C")
+                .arg(&param)
                 .spawn()?;
                 //.output()?;
             let _ = ret.wait()?;
