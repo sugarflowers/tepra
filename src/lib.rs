@@ -80,11 +80,12 @@ impl TEPRA {
             println!("{}", &self.tepra_path);
             println!("{}", param);
 
-            _ = Command::new(&self.tepra_path)
+            let ret = Command::new(&self.tepra_path)
                 .args(&["/p", &param])
                 .spawn()?;
                 //.output()?;
-
+            let _ = ret.wait()?;
+            
 
             // size.txt utf16 -> utf8
             let bin = BinaryReader::open(&self.tmp_path)?.read();
@@ -112,13 +113,13 @@ impl TEPRA {
             self.print_count
             );
 
-        println!("{} /p {}", &self.tepra_path, &param);
+        //println!("{} /p {}", &self.tepra_path, &param);
 
-        let _ret = Command::new(&self.tepra_path)
+        let ret = Command::new(&self.tepra_path)
             .args(&["/p", &param])
             .spawn()?;
             //.output()?;
-
+        let _ = ret.wait()?;
         Ok(())
     }
 }
