@@ -70,7 +70,7 @@ impl TEPRA {
 
         if self.required_tape_size != 0 {
 
-            let param = format!("{} /p {},{},{},/GT {}",
+            let param = format!(r#"{} /p "{},{},{},/GT {}""#,
                 self.tepra_path,
                 self.tpe_path,
                 self.csv_path,
