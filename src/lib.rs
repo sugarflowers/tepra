@@ -5,7 +5,7 @@ use regex::Regex;
 use std::env;
 use std::ffi::OsString;
 
-const DEFAULT_TEPRA_PATH:OsString = OsString::from(r#""c:\Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe""#);
+const DEFAULT_TEPRA_PATH:OsString = OsString::from(r#"c:\Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe"#);
 
 macro_rules! cwd {
     () => {
@@ -15,7 +15,8 @@ macro_rules! cwd {
 
 
 pub struct TEPRA {
-    pub tepra_path: String,
+    //pub tepra_path: String,
+    pub tepra_path: OsString,
     pub tpe_path: String,
     pub csv_path: String,
     pub tmp_path: String,
