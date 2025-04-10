@@ -84,7 +84,7 @@ impl TEPRA {
 
             let mut ret = Command::new("cmd")
                 .arg("/C")
-                .arg(self.tepra_path)
+                .arg(self.tepra_path.clone())
                 .arg("/p")
                 .arg(param)
                 .spawn()?;
