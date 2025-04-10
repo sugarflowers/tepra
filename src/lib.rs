@@ -3,6 +3,7 @@ use anyhow::{Result, anyhow};
 use binaryfile::BinaryReader;
 use regex::Regex;
 use std::env;
+use std::ffi::OsString;
 
 const DEFAULT_TEPRA_PATH = OsString::from(r#""c:\Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe""#);
 
