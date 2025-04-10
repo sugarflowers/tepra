@@ -70,12 +70,12 @@ impl TEPRA {
 
         if self.required_tape_size != 0 {
 
-            let param = format!(r#"{},{},{},/GT {}"#,
+            let param = OsString::from(format!(r#"{},{},{},/GT {}"#,
                 self.tpe_path,
                 self.csv_path,
                 self.print_count,
                 self.tmp_path
-                );
+                ));
 
 
             println!("{}", &self.tepra_path);
