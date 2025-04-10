@@ -29,11 +29,11 @@ impl TEPRA {
 
     pub fn new(tepra_path: Option<&str>) -> Self {
         let default_tepra_path:OsString = OsString::from(r#"c:\Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe"#);
-        let tepra_path = tepra_path.unwrap_or(default_tepra_path);
+        let tepra_path:OsString = tepra_path.unwrap_or(default_tepra_path);
 
         let tmp = format!("{}\\tepesize.txt", std::env::var("TEMP").unwrap_or_else(|_| "c:\\".to_string()));
         Self {
-            tepra_path : tepra_path.to_string().into(),
+            tepra_path : tepra_path,
             tpe_path : "".to_string(),
             csv_path: "".to_string(),
             tmp_path: tmp,
