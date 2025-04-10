@@ -78,7 +78,7 @@ impl TEPRA {
                 ));
 
 
-            println!("{}", &self.tepra_path);
+            println!("{:?}", &self.tepra_path);
             println!("{:?}", param);
 
             let mut ret = Command::new("cmd")
@@ -117,8 +117,8 @@ impl TEPRA {
             self.print_count
             );
 
-        println!("{}", &self.tepra_path);
-        println!("{}", param);
+        println!("{:?}", &self.tepra_path);
+        println!("{:?}", param);
 
         let mut ret = Command::new(&self.tepra_path)
             .args(&["/p", &param])
