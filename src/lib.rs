@@ -64,9 +64,9 @@ impl TEPRA {
                 self.num_print 
             );
 
-        let tepra_path = format!(r#""{}""#, self.tepra_path.to_string_lossy());
+        //let tepra_path = format!(r#""{}""#, self.tepra_path.to_string_lossy());
         
-        let mut child = Command::new(&tepra_path)
+        let mut child = Command::new(&self.tepra_path)
                 .args(&["/p", &param])
                 .arg(&param)
                 .spawn()?;
