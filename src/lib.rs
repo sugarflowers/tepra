@@ -72,7 +72,7 @@ impl TEPRA {
                 .spawn()?;
         */
         let mut child = Command::new("cmd")
-            .args(&["/C", OsString::from("c:/work/tepra/label6mm.bat")])
+            .args(&["/C", "c:/work/tepra/label6mm.bat"])
             .spawn()?;
         let _ = child.wait()?;
 
