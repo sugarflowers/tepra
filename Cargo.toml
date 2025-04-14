@@ -6,6 +6,6 @@ edition = "2024"
 [dependencies]
 anyhow = "1.0.97"
 binaryfile = { git = "https://github.com/sugarflowers/binaryfile.git" }
-sjis = { git = "https://github.com/sugarflowers/sjis.git" }
+#sjis = { git = "https://github.com/sugarflowers/sjis.git" }
 regex = "1.11.1"
 
