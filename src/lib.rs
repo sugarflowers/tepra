@@ -63,8 +63,8 @@ impl TEPRA {
     pub fn print(&self) -> Result<()> {
         
         let param = &format!(r#"{},{},{}"#, 
-                &self.tpe_path.into_string().unwrap(),
-                &self.csv_path.into_string().unwrap(), 
+                &self.tpe_path.clone().into_string().unwrap(),
+                &self.csv_path.clone().into_string().unwrap(), 
                 &self.num_print 
             );
         
