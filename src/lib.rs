@@ -69,11 +69,13 @@ impl TEPRA {
                 &self.num_print
             );
 
-        let mut child = Command::new("cmd")
+        //let mut child = Command::new("cmd")
+        Command::new("cmd")
                 //.args(&["/C", param])
                 .arg("/C")
                 .raw_arg(&param)
-                .spawn()?;
+                //.spawn()?;
+                .output()?;
         
 
         /*
