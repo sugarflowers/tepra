@@ -66,13 +66,15 @@ impl TEPRA {
         println!("{:?}", &self.tepra_path);
         println!("{:?}", &param);
 
+        /*
         Command::new("cmd")
             .args(&["/C", "chcp 65001"])
             .status()
             .expect("コードページ変更失敗");
+        */
         
         let mut child = Command::new(&self.tepra_path)
-                .args(&["/p", &param])
+                .args(&["/p", &String::from_utf8_lossy(&param)])
                 .output()?;
 
         //let _ = child.wait()?;
