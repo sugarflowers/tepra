@@ -54,7 +54,7 @@ impl TEPRA {
         self
     }
 
-    pub fn bat_file(mut self, path:OsString) -> Self {
+    pub fn batch(mut self, path:OsString) -> Self {
         self.bat_path = path.to_string_lossy();
         self
     }
