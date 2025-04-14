@@ -70,7 +70,7 @@ impl TEPRA {
                 .args(&["/p", &param])
                 .output()?;
 
-        let _ = child.wait()?;
+        //let _ = child.wait()?;
 
         Ok(())
 
