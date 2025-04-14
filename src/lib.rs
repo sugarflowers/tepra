@@ -58,11 +58,11 @@ impl TEPRA {
 
         println!("start print");
         
-        let param = &format!(r#"{},{},{}"#, 
+        let param = OsString(format!(r#"{},{},{}"#, 
                 self.tpe_path.to_string_lossy(),
                 self.csv_path.to_string_lossy(), 
                 self.num_print 
-            );
+            ));
 
         //let tepra_path = format!(r#""{}""#, self.tepra_path.to_string_lossy());
         
