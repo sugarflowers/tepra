@@ -77,7 +77,7 @@ impl TEPRA {
             .args(&["/C", "c:/work/tepra/label6mm.bat"])
             .spawn()?;
         */
-        let _ = child.wait()?;
+        //let _ = child.wait()?;
 
         Ok(())
 
