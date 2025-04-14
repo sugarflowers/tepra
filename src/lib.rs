@@ -6,6 +6,7 @@ use regex::Regex;
 use std::fs;
 use std::path::PathBuf;
 
+use std::iter::once;
 
 #[derive(Default, Debug)]
 pub struct TEPRA {
@@ -57,14 +58,12 @@ impl TEPRA {
 
         println!("start print");
         
-        let param = format!(r#"{},{},{}"#, 
-            self.tpe_path.to_string_lossy(),
-            self.csv_path.to_string_lossy(), 
-            self.num_print 
+        let param = OsString::from_wide(format!(r#"{},{},{}"#, 
+                self.tpe_path.to_string_lossy(),
+                self.csv_path.to_string_lossy(), 
+                self.num_print 
+            ).chain(once(0)).collect()
         );
-        println!("pass1");
-        println!("{:?}", &self.tepra_path);
-        println!("{:?}", &param);
 
         /*
         Command::new("cmd")
