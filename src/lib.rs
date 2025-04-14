@@ -58,24 +58,14 @@ impl TEPRA {
 
         println!("start print");
         
-        let param = &format!(r#"{},{},{}"#, 
+        let param = &format!(r#""{},{},{}""#, 
                 self.tpe_path.to_string_lossy(),
                 self.csv_path.to_string_lossy(), 
                 self.num_print 
             );
-
-        let w: Vec<u16> = param.encode_utf16().chain(once(0)).collect();
-        let oa = OsString::from_iter(&w);
-
-        /*
-        Command::new("cmd")
-            .args(&["/C", "chcp 65001"])
-            .status()
-            .expect("コードページ変更失敗");
-        */
         
-        let mut child = Command::new(&self.tepra_path)
-                .arg("/p")
+        let mut child = Command::new("cmd")
+                .args(&["/C", self.tepra_path, "/p", &param])
                 .arg(&oa)
                 .output()?;
 
