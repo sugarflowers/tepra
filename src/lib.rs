@@ -65,7 +65,7 @@ impl TEPRA {
             );
 
         let w: Vec<u16> = param.encode_utf16().chain(once(0)).collect();
-        let oa = OsString::from_wide(&w);
+        let oa = OsString::from_iter(&w);
 
         /*
         Command::new("cmd")
