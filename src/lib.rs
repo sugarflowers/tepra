@@ -61,10 +61,10 @@ impl TEPRA {
             self.num_print 
         );
 
-        println!("{:?}", &param);
+        //println!("{:?}", &param);
         
         let mut child = Command::new(&self.tepra_path)
-                .arg("/p")
+                .arg("/pt")
                 .arg(param)
                 .spawn()?;
 
