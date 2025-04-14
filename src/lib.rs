@@ -68,7 +68,8 @@ impl TEPRA {
         
         let mut child = Command::new(&self.tepra_path)
                 .args(&["/p", param])
-                .status()?;
+                .output()?;
+                //.status()?;
                 //.spawn()?;
 
                 println!("stdout: {}", String::from_utf8_lossy(&child.stdout)); // 標準出力
