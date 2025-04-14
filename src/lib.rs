@@ -55,12 +55,14 @@ impl TEPRA {
 
     pub fn print(&self) -> Result<()> {
 
+        println!("start print");
+        
         let param = format!(r#""{},{},{}""#, 
             self.tpe_path.to_string_lossy(),
             self.csv_path.to_string_lossy(), 
             self.num_print 
         ).replace("/", "\\");
-
+        println!("pass1");
         println!("{:?}", &param);
         
         let mut child = Command::new(&self.tepra_path)
