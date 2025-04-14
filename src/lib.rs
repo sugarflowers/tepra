@@ -63,9 +63,11 @@ impl TEPRA {
                 self.csv_path.to_string_lossy(), 
                 self.num_print 
             );
+
+        let tepra_path = self.tepra_path.to_string_lossy();
         
         let mut child = Command::new("cmd")
-                .args(&["/C", self.tepra_path.to_string_lossy(), "/p", &param])
+                .args(&["/C", &tepra_path, "/p", &param])
                 .arg(&param)
                 .output()?;
 
