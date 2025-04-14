@@ -62,7 +62,7 @@ impl TEPRA {
 
     pub fn print(&self) -> Result<()> {
         
-        let param = &format!(r#"{} /p {},{},{}"#, 
+        let param = &format!(r#""{}" /p "{},{},{}""#, 
                 &self.tepra_path.to_string_lossy(),
                 &self.tpe_path.to_string_lossy(),
                 &self.csv_path.to_string_lossy(), 
