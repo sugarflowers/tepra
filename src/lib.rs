@@ -71,8 +71,8 @@ impl TEPRA {
                 .status()?;
                 //.spawn()?;
 
-                println!("stdout: {}", String::from_utf8_lossy(&output.stdout)); // 標準出力
-                println!("stderr: {}", String::from_utf8_lossy(&output.stderr)); // 標準エラー出力
+                println!("stdout: {}", String::from_utf8_lossy(&child.stdout)); // 標準出力
+                println!("stderr: {}", String::from_utf8_lossy(&child.stderr)); // 標準エラー出力
 
         /*
         let mut child = Command::new("cmd")
