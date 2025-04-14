@@ -96,17 +96,10 @@ impl TEPRA {
             }
         }
 
-        /*
         let param = format!(r#"{},{},{},/GT {}"#, 
             self.tpe_path.to_string_lossy(),
             self.csv_path.to_string_lossy(), 
             self.num_print,
-            self.size_path.to_string_lossy()
-        );
-
-        */
-
-        let param = format!(r#"dummy,dummy,1,/GT {}"#, 
             self.size_path.to_string_lossy()
         );
 
