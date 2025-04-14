@@ -90,7 +90,7 @@ impl TEPRA {
             self.csv_path.to_string_lossy(), 
             self.num_print,
             self.size_path.to_string_lossy()
-        );
+        ).replace("/","\\");
 
         let mut child = Command::new(&self.tepra_path)
                 .arg("/p")
