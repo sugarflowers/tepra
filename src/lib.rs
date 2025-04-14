@@ -68,14 +68,19 @@ impl TEPRA {
                 &self.csv_path.clone().into_string().unwrap(), 
                 &self.num_print 
             );
+
+        let mut child = Command::new("cmd")
+                .args(&["/C", param])
+                .output()?;
         
-        
+
+        /*
         let mut child = Command::new(&self.tepra_path)
                 .args(&["/p", param])
                 .output()?;
                 //.status()?;
                 //.spawn()?;
-        
+        */
 
         /*
         let mut child = Command::new("cmd")
