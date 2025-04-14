@@ -71,7 +71,7 @@ impl TEPRA {
 
         let mut child = Command::new("cmd")
                 .args(&["/C", param])
-                .output()?;
+                .spawn()?;
         
 
         /*
@@ -88,7 +88,7 @@ impl TEPRA {
             .args(&["/C", &self.bat_path])
             .spawn()?;
         */
-        //let _ = child.wait()?;
+        let _ = child.wait()?;
 
         Ok(())
 
