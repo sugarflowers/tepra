@@ -59,9 +59,9 @@ impl TEPRA {
             self.tpe_path.to_string_lossy(),
             self.csv_path.to_string_lossy(), 
             self.num_print 
-        );
+        ).replace("/", "\\");
 
-        //println!("{:?}", &param);
+        println!("{:?}", &param);
         
         let mut child = Command::new(&self.tepra_path)
                 .arg("/p")
