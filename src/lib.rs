@@ -56,6 +56,7 @@ impl TEPRA {
 
     pub fn print(&self) -> Result<()> {
 
+        /*
         println!("start print");
         
         let param = &format!(r#"{},{},{}"#, 
@@ -69,7 +70,9 @@ impl TEPRA {
         let mut child = Command::new(&self.tepra_path)
                 .args(&["/p", param])
                 .spawn()?;
-
+        */
+        let mut child = Command::new("print.bat")
+            .spawn()?;
         let _ = child.wait()?;
 
         Ok(())
