@@ -79,7 +79,7 @@ impl TEPRA {
         if path_buf.exists() {
             match fs::remove_file(&path_buf) {
                 Ok(_) => {},
-                Err(e) => Err(anyhow!("do not erase tepra size file.")),
+                Err(e) => return Err(anyhow!("do not erase tepra size file.")),
             }
         }
         
