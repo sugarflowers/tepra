@@ -58,7 +58,7 @@ impl TEPRA {
 
         println!("start print");
         
-        let param = OsString(format!(r#"{},{},{}"#, 
+        let param = OsString::from(format!(r#"{},{},{}"#, 
                 self.tpe_path.to_string_lossy(),
                 self.csv_path.to_string_lossy(), 
                 self.num_print 
