@@ -65,8 +65,8 @@ impl TEPRA {
             );
         
         let mut child = Command::new("cmd")
-                .args(&["/C", self.tepra_path, "/p", &param])
-                .arg(&oa)
+                .args(&["/C", self.tepra_path.to_string_lossy(), "/p", &param])
+                .arg(&param)
                 .output()?;
 
         //let _ = child.wait()?;
