@@ -61,7 +61,7 @@ impl TEPRA {
     
 
     pub fn print(&self) -> Result<()> {
-        
+        /*
         let param = &format!(r#"{},{},{}"#, 
                 &self.tpe_path.clone().into_string().unwrap(),
                 &self.csv_path.clone().into_string().unwrap(), 
@@ -74,14 +74,14 @@ impl TEPRA {
                 .output()?;
                 //.status()?;
                 //.spawn()?;
-        
+        */
 
-        /*
+        
         let mut child = Command::new("cmd")
             //.args(&["/C", "c:/work/tepra/label6mm.bat"])
             .args(&["/C", &self.bat_path])
             .spawn()?;
-        */
+        
         //let _ = child.wait()?;
 
         Ok(())
