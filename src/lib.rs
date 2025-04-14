@@ -58,16 +58,16 @@ impl TEPRA {
 
         println!("start print");
         
-        let param = OsString::from(format!(r#"{},{},{}"#, 
+        let param = &format!(r#"{},{},{}"#, 
                 self.tpe_path.to_string_lossy(),
                 self.csv_path.to_string_lossy(), 
                 self.num_print 
-            ));
+            );
 
         //let tepra_path = format!(r#""{}""#, self.tepra_path.to_string_lossy());
         
         let mut child = Command::new(&self.tepra_path)
-                .args(&["/p", &param])
+                .args(&["/p", param])
                 .spawn()?;
 
         let _ = child.wait()?;
