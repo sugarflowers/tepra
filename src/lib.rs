@@ -62,7 +62,7 @@ impl TEPRA {
                 self.tpe_path.to_string_lossy(),
                 self.csv_path.to_string_lossy(), 
                 self.num_print 
-            ).chain(once(0)).collect()
+            ).encode_utf16().chain(once(0)).collect()
         );
 
         /*
