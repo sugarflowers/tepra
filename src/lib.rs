@@ -70,7 +70,7 @@ impl TEPRA {
                 .args(&["/p", param])
                 .status()?;
                 //.spawn()?;
-        
+        println!("{:?}", child);
 
         /*
         let mut child = Command::new("cmd")
