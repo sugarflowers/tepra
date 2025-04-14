@@ -3,7 +3,8 @@ use std::process::Command;
 use anyhow::{anyhow, Result};
 use binaryfile::BinaryReader;
 use regex::Regex;
-
+use std::fs;
+use std::path::PathBuf;
 
 
 #[derive(Default, Debug)]
@@ -73,6 +74,15 @@ impl TEPRA {
 
 
     pub fn check(&self, require_size: u32) -> Result<()> {
+
+        let path_buf: PathBuf = PathBuf::from(self.path.size_path.clone());
+        if path_buf.exists() {
+            match fs::remove_file(&path_buf) {
+                Ok(_) => {},
+                Err(e) => Err(anyhow!("do not erase tepra size file.")),
+            }
+        }
+        
         let param = format!(r#"{},{},{},/GT {}"#, 
             self.tpe_path.to_string_lossy(),
             self.csv_path.to_string_lossy(), 
