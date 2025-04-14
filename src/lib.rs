@@ -57,7 +57,7 @@ impl TEPRA {
 
         println!("start print");
         
-        let param = format!(r#" /p "{},{},{}""#, 
+        let param = format!(r#"{},{},{}"#, 
             self.tpe_path.to_string_lossy(),
             self.csv_path.to_string_lossy(), 
             self.num_print 
@@ -66,7 +66,7 @@ impl TEPRA {
         println!("{:?}", &param);
         
         let mut child = Command::new(&self.tepra_path)
-                //.arg("/p")
+                .arg("/p")
                 .arg(param)
                 .spawn()?;
 
