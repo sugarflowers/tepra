@@ -15,6 +15,7 @@ pub struct TEPRA {
     pub csv_path: OsString,
     pub size_path: OsString,
     pub num_print: u32,
+    pub bat_path: String,
 }
 
 
@@ -52,6 +53,11 @@ impl TEPRA {
         self.num_print = num_of_print;
         self
     }
+
+    pub fn bat_file(mut self, path:OsString) -> Self {
+        self.bat_path = path.to_string_lossy();
+        self
+    }
     
 
     pub fn print(&self) -> Result<()> {
@@ -71,7 +77,8 @@ impl TEPRA {
         */
         
         let mut child = Command::new("cmd")
-            .args(&["/C", "c:/work/tepra/label6mm.bat"])
+            //.args(&["/C", "c:/work/tepra/label6mm.bat"])
+            .args(&["/C", &self.bat_path])
             .spawn()?;
         
         //let _ = child.wait()?;
