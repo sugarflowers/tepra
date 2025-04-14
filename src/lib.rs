@@ -75,7 +75,7 @@ impl TEPRA {
 
     pub fn check(&self, require_size: u32) -> Result<()> {
 
-        let path_buf: PathBuf = PathBuf::from(self.path.size_path.clone());
+        let path_buf: PathBuf = PathBuf::from(self.size_path.clone());
         if path_buf.exists() {
             match fs::remove_file(&path_buf) {
                 Ok(_) => {},
