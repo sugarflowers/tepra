@@ -23,7 +23,7 @@ pub struct TEPRA {
 impl TEPRA {
     pub fn new() -> TEPRA {
         TEPRA {
-            tepra_path: OsString::from(r#"c:\\"Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe""#),
+            tepra_path: OsString::from(r#"c:\Program Files (x86)\KING JIM\TEPRA SPC10\SPC10.exe"#),
             num_print: 1,
             ..Default::default()     
         }
