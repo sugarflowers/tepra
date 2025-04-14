@@ -55,7 +55,7 @@ impl TEPRA {
     }
 
     pub fn batch(mut self, path:OsString) -> Self {
-        self.bat_path = path.into_string();
+        self.bat_path = path.into_string().unwrap();
         self
     }
     
