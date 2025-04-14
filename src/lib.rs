@@ -63,10 +63,10 @@ impl TEPRA {
     pub fn print(&self) -> Result<()> {
         
         let param = &format!(r#"{} /p {},{},{}"#, 
-                &self.tepra_path.clone().into_string().unwrap(),
-                &self.tpe_path.clone().into_string().unwrap(),
-                &self.csv_path.clone().into_string().unwrap(), 
-                &self.num_print 
+                &self.tepra_path.to_string_lossy(),
+                &self.tpe_path.to_string_lossy(),
+                &self.csv_path.to_string_lossy(), 
+                &self.num_print
             );
 
         let mut child = Command::new("cmd")
