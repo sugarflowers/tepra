@@ -63,7 +63,7 @@ impl TEPRA {
                 self.csv_path.to_string_lossy(), 
                 self.num_print 
             );
-        
+        /*
         let mut child = Command::new(&self.tepra_path)
                 .args(&["/p", param])
                 .output()?;
@@ -73,12 +73,12 @@ impl TEPRA {
                 println!("stdout: {}", String::from_utf8_lossy(&child.stdout)); // 標準出力
                 println!("stderr: {}", String::from_utf8_lossy(&child.stderr)); // 標準エラー出力
         
+        */
         
-        /*
         let mut child = Command::new("cmd")
             .args(&["/C", "c:/work/tepra/label6mm.bat"])
             .spawn()?;
-        */
+        
         //let _ = child.wait()?;
 
         Ok(())
