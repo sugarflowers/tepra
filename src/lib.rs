@@ -63,8 +63,8 @@ impl TEPRA {
             self.num_print 
         );
         println!("pass1");
-        println!("{}", &self.tepra_path);
-        println!("{}", &param);
+        println!("{:?}", &self.tepra_path);
+        println!("{:?}", &param);
         
         let mut child = Command::new(&self.tepra_path)
                 .arg("/p")
