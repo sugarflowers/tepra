@@ -71,6 +71,22 @@ impl TEPRA {
                 .status()?;
                 //.spawn()?;
         println!("{:?}", child);
+はい、ExitStatus(0) は正常終了を意味します。一般的に、WindowsやUnix系のコマンドは終了ステータス (Exit Code) が 0 の場合、エラーなく正常に処理が完了したことを示します。
+もし status() の結果が ExitStatus(0) であるならば、Rust の Command を使ったバッチファイル実行自体は成功していることになります。ただし、実際に期待している動作が行われたかどうかは、stdout や stderr の内容を確認することで判断できます。
+追加で確認できること
+use std::process::Command;
+
+fn main() {
+    let batch_file = r#"C:\path\to\your_script.bat"#;
+
+    let output = Command::new("cmd")
+        .args(&["/C", batch_file])
+        .output()
+        .expect("バッチファイル実行失敗");
+
+    println!("Exit Code: {:?}", output.status); // 終了コードの確認
+    println!("stdout: {}", String::from_utf8_lossy(&output.stdout)); // 標準出力
+    println!("stderr: {}", String::from_utf8_lossy(&output.stderr)); // 標準エラー出力
 
         /*
         let mut child = Command::new("cmd")
