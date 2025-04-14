@@ -8,6 +8,8 @@ use std::path::PathBuf;
 
 use std::iter::once;
 
+use std::os::windows::process::CommandExt;
+
 #[derive(Default, Debug)]
 pub struct TEPRA {
     pub tepra_path: OsString,
