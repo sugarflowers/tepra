@@ -67,9 +67,8 @@ impl TEPRA {
         println!("{:?}", &param);
         
         let mut child = Command::new(&self.tepra_path)
-                .arg("/p")
-                .arg(param)
-                .spawn()?;
+                .args(&["/p", param])
+                .output()?;
 
         let _ = child.wait()?;
 
