@@ -58,12 +58,14 @@ impl TEPRA {
 
         println!("start print");
         
-        let param = OsString::from_iter(format!(r#"{},{},{}"#, 
+        let param = &format!(r#"{},{},{}"#, 
                 self.tpe_path.to_string_lossy(),
                 self.csv_path.to_string_lossy(), 
                 self.num_print 
-            ).encode_utf16().chain(once(0)).collect()
-        );
+            );
+
+        let w = param.encode_utf16().chain(once(0)).collect();
+        let oa = OsString::from_iter(&w);
 
         /*
         Command::new("cmd")
@@ -73,7 +75,7 @@ impl TEPRA {
         */
         
         let mut child = Command::new(&self.tepra_path)
-                .args(&["/p", &String::from_utf8_lossy(&param)])
+                .args(&["/p", &oa])
                 .output()?;
 
         //let _ = child.wait()?;
