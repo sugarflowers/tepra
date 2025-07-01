@@ -4,7 +4,7 @@ use anyhow::{anyhow, Result};
 use binaryfile::BinaryReader;
 use regex::Regex;
 use std::fs;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use std::iter::once;
 
@@ -63,7 +63,6 @@ impl TEPRA {
     
 
     pub fn print(&self) -> Result<()> {
-        /*
         let param = &format!(r#""{}" /p "{},{},{}""#, 
                 &self.tepra_path.to_string_lossy(),
                 &self.tpe_path.to_string_lossy(),
@@ -71,31 +70,18 @@ impl TEPRA {
                 &self.num_print
             );
 
-        //let mut child = Command::new("cmd")
-        Command::new("cmd")
-                //.args(&["/C", param])
-                .arg("/C")
-                .raw_arg(&param)
-                //.spawn()?;
-                .output()?;
-        */
+        let full_arg = format!(r#"{},{},{}"#,
+            self.tpe_path.to_string_lossy(),
+            self.csv_path.to_string_lossy(), 
+            self.num_print
+        );
 
-        /*
         let mut child = Command::new(&self.tepra_path)
-                .args(&["/p", param])
-                .output()?;
-                //.status()?;
-                //.spawn()?;
-        */
+                .args(["/p", &full_arg])
+                .current_dir(Path::new(&self.tepra_path).parent().unwrap())
+                .spawn()?;
 
-        
-        
-        let mut child = Command::new("cmd")
-            //.args(&["/C", "c:/work/tepra/label6mm.bat"])
-            .args(&["/C", &self.bat_path])
-            .spawn()?;
-        
-        //let _ = child.wait()?;
+        let _ = child.wait()?;
 
         Ok(())
 
@@ -103,7 +89,6 @@ impl TEPRA {
 
 
     pub fn check(&self, require_size: u32) -> Result<()> {
-
         let path_buf: PathBuf = PathBuf::from(self.size_path.clone());
         if path_buf.exists() {
             match fs::remove_file(&path_buf) {
@@ -112,7 +97,7 @@ impl TEPRA {
             }
         }
 
-        let param = format!(r#"{},{},{},/GT {}"#, 
+        let full_arg = format!(r#"{},{},{},/GT {}"#,
             self.tpe_path.to_string_lossy(),
             self.csv_path.to_string_lossy(), 
             self.num_print,
@@ -120,8 +105,8 @@ impl TEPRA {
         );
 
         let mut child = Command::new(&self.tepra_path)
-                .arg("/p")
-                .arg(param)
+                .args(["/p", &full_arg])
+                .current_dir(Path::new(&self.tepra_path).parent().unwrap())
                 .spawn()?;
 
         let _ = child.wait()?;
@@ -157,14 +142,13 @@ fn tepra_test() {
 
 
 
-    let res = match tepra.check(6) {
+    let res = match tepra.check(12) {
 
         Ok(_) => {
             println!("ok!");
             tepra.print().unwrap();
         },
 
-        Err(e) => println!("err: {}", e)
+        Err(e) => println!("error: {}", e)
     };
-
 }
