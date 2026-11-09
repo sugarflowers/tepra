@@ -6,8 +6,6 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::iter::once;
 
-//use std::os::windows::process::CommandExt;
-
 #[derive(Default, Debug)]
 pub struct TEPRA {
     pub tepra_path: PathBuf,
