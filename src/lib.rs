@@ -4,10 +4,9 @@ use binaryfile::BinaryReader;
 use regex::Regex;
 use std::fs;
 use std::path::{Path, PathBuf};
-
 use std::iter::once;
 
-use std::os::windows::process::CommandExt;
+//use std::os::windows::process::CommandExt;
 
 #[derive(Default, Debug)]
 pub struct TEPRA {
@@ -17,7 +16,6 @@ pub struct TEPRA {
     pub size_path: PathBuf,
     pub num_print: u32,
 }
-
 
 
 impl TEPRA {
@@ -130,8 +128,6 @@ fn tepra_test() {
         .csv(PathBuf::from(r#"c:\work\tepra\dnum.csv"#))
         .size_file(PathBuf::from(r#"c:\work\tepra\tapesize.txt"#))
         .number_of(1);
-
-
 
     let res = match tepra.check(6) {
 
