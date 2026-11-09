@@ -100,17 +100,24 @@ impl TEPRA {
 
         // decode
         let size_path = &self.size_path.to_string_lossy();
-        let bin = BinaryReader::open(&size_path)?.read();
-        let utf16data: Vec<u16> = bin.unwrap()
-            .chunks(2).map(|c| u16::from_le_bytes([c[0], c[1]])).collect();
+        let bin = BinaryReader::open(&size_path)?.read()?;
+        let utf16data: Vec<u16> = bin
+            .chunks_exact(2)
+            .map(|c| u16::from_le_bytes([c[0], c[1]]))
+            .collect();
         let utf8data = String::from_utf16_lossy(&utf16data);
 
         // size check
         let pattern = format!(" {}mm", require_size);
-        let re = Regex::new(&pattern).unwrap();
+        //let re = Regex::new(&pattern).unwrap();
+        if !utf8data.contains(&pattern) {
+            return Err(anyhow!("not required tape size"));
+        }
+        /*
         if re.is_match(&utf8data) == false {
             return Err(anyhow!("not required tape size"));
         }
+        */
 
         Ok(())
     }
